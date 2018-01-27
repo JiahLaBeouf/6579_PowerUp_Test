@@ -7,12 +7,7 @@
 
 package org.usfirst.frc.team6579.robot;
 
-import edu.wpi.first.wpilibj.IterativeRobot;
-import edu.wpi.first.wpilibj.Joystick;
-import edu.wpi.first.wpilibj.Spark;
-import edu.wpi.first.wpilibj.SpeedControllerGroup;
-import edu.wpi.first.wpilibj.Timer;
-import edu.wpi.first.wpilibj.VictorSP;
+import edu.wpi.first.wpilibj.*;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
@@ -40,12 +35,16 @@ public class Robot extends IterativeRobot {
 	private Joystick m_stick = new Joystick(0);
 	private Timer m_timer = new Timer();
 
+
+
 	/**
 	 * This function is run when the robot is first started up and should be
 	 * used for any initialization code.
 	 */
 	@Override
 	public void robotInit() {
+	    Encoder sampleEncoder;
+	    sampleEncoder = new Encoder(0,1,false,Encoder.EncodingType.k4X);
 	}
 
 	/**
@@ -75,6 +74,14 @@ public class Robot extends IterativeRobot {
 	 */
 	@Override
 	public void teleopInit() {
+        Encoder sampleEncoder = new Encoder(0, 1, false, Encoder.EncodingType.k4X);
+        sampleEncoder.setMaxPeriod(.1);
+        sampleEncoder.setMinRate(10);
+        sampleEncoder.setDistancePerPulse(5);
+        sampleEncoder.setReverseDirection(true);
+        sampleEncoder.setSamplesToAverage(7);
+
+        sampleEncoder.reset();
 	}
 
 	/**
@@ -85,6 +92,20 @@ public class Robot extends IterativeRobot {
 		m_robotDrive.arcadeDrive(m_stick.getY(), m_stick.getX());
 
         SmartDashboard.putNumber("m_left power", m_left.get());
+
+
+        Encoder sampleEncoder = new Encoder(0, 1, false, Encoder.EncodingType.k4X);
+        int count = sampleEncoder.get();
+        double raw = sampleEncoder.getRaw();
+        double distance = sampleEncoder.getDistance();
+        double period = sampleEncoder.getPeriod();
+        double rate = sampleEncoder.getRate();
+        boolean direction = sampleEncoder.getDirection();
+        boolean stopped = sampleEncoder.getStopped();
+
+
+        SmartDashboard.putNumber("Encoder count",count );
+        SmartDashboard.putNumber("Encoder distance",distance);
 
 	}
 
