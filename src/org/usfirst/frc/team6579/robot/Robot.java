@@ -10,7 +10,9 @@ package org.usfirst.frc.team6579.robot;
 import edu.wpi.first.wpilibj.IterativeRobot;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.Spark;
+import edu.wpi.first.wpilibj.SpeedControllerGroup;
 import edu.wpi.first.wpilibj.Timer;
+import edu.wpi.first.wpilibj.VictorSP;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 
 /**
@@ -21,8 +23,19 @@ import edu.wpi.first.wpilibj.drive.DifferentialDrive;
  * directory.
  */
 public class Robot extends IterativeRobot {
-	private DifferentialDrive m_robotDrive
-			= new DifferentialDrive(new Spark(0), new Spark(1));
+	private VictorSP m_frontLeft = new VictorSP(0);
+	private VictorSP m_rearLeft = new VictorSP(1);
+	private SpeedControllerGroup m_left = new SpeedControllerGroup(m_frontLeft, m_rearLeft);
+	
+	private VictorSP m_frontRight = new VictorSP(2);
+	private VictorSP m_rearRight = new VictorSP(3);
+	private SpeedControllerGroup m_right = new SpeedControllerGroup(m_frontRight, m_rearRight);
+	
+	private DifferentialDrive m_robotDrive = new DifferentialDrive(m_left, m_right);
+	
+	// replacing with Speed groups
+	//private DifferentialDrive m_robotDrive = new DifferentialDrive(new Spark(0), new Spark(1));
+	
 	private Joystick m_stick = new Joystick(0);
 	private Timer m_timer = new Timer();
 
