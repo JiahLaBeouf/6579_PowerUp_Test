@@ -35,6 +35,8 @@ public class Robot extends IterativeRobot {
 	private Joystick m_stick = new Joystick(0);
 	private Timer m_timer = new Timer();
 
+	private Encoder sampleEncoder;
+
 
 
 	/**
@@ -43,7 +45,7 @@ public class Robot extends IterativeRobot {
 	 */
 	@Override
 	public void robotInit() {
-	    Encoder sampleEncoder;
+
 	    sampleEncoder = new Encoder(0,1,false,Encoder.EncodingType.k4X);
 	}
 
@@ -74,7 +76,7 @@ public class Robot extends IterativeRobot {
 	 */
 	@Override
 	public void teleopInit() {
-        Encoder sampleEncoder = new Encoder(0, 1, false, Encoder.EncodingType.k4X);
+        //Encoder sampleEncoder = new Encoder(0, 1, false, Encoder.EncodingType.k4X);
         sampleEncoder.setMaxPeriod(.1);
         sampleEncoder.setMinRate(10);
         sampleEncoder.setDistancePerPulse(5);
