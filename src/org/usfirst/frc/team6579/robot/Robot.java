@@ -37,6 +37,8 @@ public class Robot extends IterativeRobot {
 
 	private Encoder sampleEncoder;
 
+    PowerDistributionPanel pdp = new PowerDistributionPanel();
+
 
 
 	/**
@@ -96,7 +98,7 @@ public class Robot extends IterativeRobot {
         SmartDashboard.putNumber("m_left power", m_left.get());
 
 
-        Encoder sampleEncoder = new Encoder(0, 1, false, Encoder.EncodingType.k4X);
+        //Encoder sampleEncoder = new Encoder(0, 1, false, Encoder.EncodingType.k4X);
         int count = sampleEncoder.get();
         double raw = sampleEncoder.getRaw();
         double distance = sampleEncoder.getDistance();
@@ -108,6 +110,11 @@ public class Robot extends IterativeRobot {
 
         SmartDashboard.putNumber("Encoder count",count );
         SmartDashboard.putNumber("Encoder distance",distance);
+        SmartDashboard.putNumber("Raw encoder", raw);
+
+        if (m_stick.getRawButton(11)){
+            sampleEncoder.reset();
+        }
 
 	}
 
