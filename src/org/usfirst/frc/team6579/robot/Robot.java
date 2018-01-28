@@ -49,6 +49,8 @@ public class Robot extends IterativeRobot {
 	public void robotInit() {
 
 	    sampleEncoder = new Encoder(0,1,false,Encoder.EncodingType.k4X);
+
+        //pdp.clearStickyFaults();
 	}
 
 	/**
@@ -98,6 +100,7 @@ public class Robot extends IterativeRobot {
         SmartDashboard.putNumber("m_left power", m_left.get());
 
 
+        //Sets up the encoder for getting values
         //Encoder sampleEncoder = new Encoder(0, 1, false, Encoder.EncodingType.k4X);
         int count = sampleEncoder.get();
         double raw = sampleEncoder.getRaw();
@@ -112,8 +115,21 @@ public class Robot extends IterativeRobot {
         SmartDashboard.putNumber("Encoder distance",distance);
         SmartDashboard.putNumber("Raw encoder", raw);
 
+        //putting the current values from the left side of the robot (PDP channels 2 & 3)
+        SmartDashboard.putNumber("Left current 2",pdp.getCurrent(2));
+        SmartDashboard.putNumber("Left current 3", pdp.getCurrent(3));
+
+        //putting the current of the right side (channels x & y)
+        SmartDashboard.putNumber("Right current 14",pdp.getCurrent(14));
+        SmartDashboard.putNumber("Right current 15",pdp.getCurrent(15));
+
+        //resets the encoder values
         if (m_stick.getRawButton(11)){
             sampleEncoder.reset();
+        }
+        //resets the PDP's sticky faults
+        if (m_stick.getRawButton(12)){
+            pdp.clearStickyFaults();
         }
 
 	}
